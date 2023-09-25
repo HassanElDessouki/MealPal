@@ -1,0 +1,30 @@
+{
+  "name": "mealpal",
+  "version": "1.0.0",
+  "description": "Nutritional Guide & Sustainable Meal Planner WebApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HassanElDessouki/MealPal.git"
+  },
+  "keywords": [
+    "sustainable",
+    "nutritional",
+    "healthy",
+    "health",
+    "meal"
+  ],
+  "author": "Hassan W. ElDessouki, Rafael Beltran, MD Sayem Saif",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HassanElDessouki/MealPal/issues"
+  },
+  "homepage": "https://github.com/HassanElDessouki/MealPal#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  }
+}
