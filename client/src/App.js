@@ -1,34 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
-function MyButton() {
-  return (
-    <button>I'm a button</button>
-  );
-}
-
-
+import { useEffect, useState } from "react";
 function App() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch("/test")
+      .then((res) => res.json())
+      .then((result) => setData(result.message));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <MyButton />
-          Learn React
-        </a>
+        <p>{!data ? "Loading..." : data}</p>
       </header>
     </div>
   );
 }
-
 
 export default App;
