@@ -15,20 +15,4 @@ app.get("*", function (req, res) {
   console.log(getBMI(1.85, 104))
 });
 
-// Used to make the final report
-app.post('/userData', function(req, res) {
-  const BMI = req.body.name;
-  const age = req.body.age;
-  const height = req.body.height
-})
 
-// Takes food input from form, uses API to get more data about the food and returns it
-app.post('/searchFood', function(req, res) {
-  const BMI = req.body.name;
-  const age = req.body.age;
-  const height = req.body.height
-})
-
-app.listen(80, () => {
-  console.log("Listening on " + 80);
-});
