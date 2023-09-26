@@ -13,4 +13,6 @@ app.get("*", function (req, res) {
   res.send("<h1>URL " + req + " is not found</h1>");
 });
 
-
+app.listen(8080, () => {
+  console.log("Listening on " + 8080);
+});
