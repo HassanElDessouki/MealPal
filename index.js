@@ -11,8 +11,6 @@ app.get("/test", (req, res) => {
 
 app.get("*", function (req, res) {
   res.send("<h1>URL " + req + " is not found</h1>");
-
-  console.log(getBMI(1.85, 104))
 });
 
 
