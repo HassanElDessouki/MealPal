@@ -5,7 +5,7 @@ import { actions } from "../Utils/Reducers";
 
 export default function UserMeasurements() {
   const [height, setHeight] = useState("");
-  const [heightUnit, setHeightUnit] = useState("m");
+  const [heightUnit, setHeightUnit] = useState("cm");
   const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kg");
   const [age, setAge] = useState("");
@@ -13,42 +13,33 @@ export default function UserMeasurements() {
 
   useEffect(() => {
     console.log(state.user_units);
-
+    console.log(state.user_units_filled);
     if (
       isNaN(state.user_units.height) === false &&
       isNaN(state.user_units.weight) === false &&
       isNaN(state.user_units.age) === false
     ) {
-      dispatch({ type: actions.SET_HAVE_USER_UNITS, payload: true });
+      dispatch({ type: actions.USER_UNITS_FILLED, payload: true });
     }
-
-    console.log(state.have_user_units);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.user_units, state.have_user_units]);
+  }, [state.user_units, state.user_units_filled]);
 
-  const convertHeightToMeters = (value, unit) => {
+  const convertHeightToCentimeters = (value, unit) => {
     switch (unit) {
-      case "cm":
-        return parseFloat(value) / 100;
-      case "y":
-        return parseFloat(value) * 0.9144;
+      case "m":
+        return parseFloat(value) * 100;
       case "in":
-        return parseFloat(value) * 0.0254;
+        return parseFloat(value) * 2.54;
       case "ft":
-        return parseFloat(value) * 0.3048;
+        return parseFloat(value) * 30.48;
       default:
         return parseFloat(value);
     }
   };
   const convertWeightToKilograms = (value, unit) => {
     switch (unit) {
-      case "gm":
-        return parseFloat(value) / 1000;
       case "st":
         return parseFloat(value) * 6.35029;
-      case "oz":
-        return parseFloat(value) * 0.0283495;
       case "lb":
         return parseFloat(value) * 0.453592;
       default:
@@ -58,14 +49,14 @@ export default function UserMeasurements() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const heightInMeters = convertHeightToMeters(height, heightUnit);
+    const heightInCentimeters = convertHeightToCentimeters(height, heightUnit);
     const weightInKilograms = convertWeightToKilograms(weight, weightUnit);
     const ageToInt = parseInt(age);
 
     dispatch({
       type: actions.SET_USER_UNITS,
       payload: {
-        height: heightInMeters,
+        height: heightInCentimeters,
         weight: weightInKilograms,
         age: ageToInt,
       },
@@ -92,11 +83,10 @@ export default function UserMeasurements() {
             onChange={(e) => setHeightUnit(e.target.value)}
             className=" rounded-xl bg-textInputStroke text-black"
           >
+            <option value="cm">Centimeters</option>
             <option value="m">Meters</option>
-            <option value="cm">Centimeter</option>
-            <option value="y">Yards</option>
             <option value="in">Inches</option>
-            <option value="ft">Feet</option>
+            <option value="ft">Feets</option>
           </select>
         </div>
         <div className="flex flex-row items-center  gap-5">
@@ -115,9 +105,7 @@ export default function UserMeasurements() {
             className=" rounded-xl bg-textInputStroke text-black"
           >
             <option value="kg">Kilograms</option>
-            <option value="gm">Grams</option>
             <option value="st">Stones</option>
-            <option value="oz">Ounces</option>
             <option value="lb">Pounds</option>
           </select>
         </div>

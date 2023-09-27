@@ -23,7 +23,7 @@ export default function BMIScreen() {
       <state className="user_units"></state>weight /
       (state.user_units.height * state.user_units.height); */
     const bmi_calculation =
-      state.user_units.weight / state.user_units.height ** 2;
+      state.user_units.weight / (state.user_units.height / 100) ** 2;
     setBmi(bmi_calculation.toFixed(2));
     console.log(state.user_units.height);
     console.log(state.user_units.weight);
@@ -33,7 +33,7 @@ export default function BMIScreen() {
   return (
     <InfoContainer>
       <h1 className="text-4xl font-bold">I got your results {state.name}!</h1>
-      <p className="text-2xl mt-10">Your BMI is: {bmi} kg/m2</p>
+      <p className="text-2xl mt-10">Your BMI is: {bmi} kg/cm^2</p>
       <p className="text-2xl mt-5">
         That's indicate your status is: <b>{bmiStatus}</b>
       </p>
