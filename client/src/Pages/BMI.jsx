@@ -97,7 +97,7 @@ export default function BMIScreen() {
       (state.user_units.height * state.user_units.height); */
       
     const bmi_calculation =
-      state.user_units.weight / state.user_units.height ** 2;
+      state.user_units.weight / (state.user_units.height / 100) ** 2;
     setBmi(bmi_calculation.toFixed(2));
     console.log("BMI.jsx, height: ", state.user_units.height);
     console.log("BMI.jsx, weight: ", state.user_units.weight);

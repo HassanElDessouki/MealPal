@@ -10,7 +10,7 @@ export default function CurrentScreen() {
     <div className="flex justify-center items-center min-h-screen w-screen">
       {state.show_greeting ? (
         <NameInputScreen />
-      ) : !state.have_user_units ? (
+      ) : !state.user_units_filled ? (
         <UserMeasurements />
       ) : (
         <BMIScreen />

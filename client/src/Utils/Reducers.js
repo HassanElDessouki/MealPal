@@ -2,7 +2,7 @@ export const actions = {
   SET_GREETING: "SET_GREETING",
   SET_NAME: "SET_NAME",
   SET_USER_UNITS: "SET_USER_UNITS",
-  SET_HAVE_USER_UNITS: "SET_HAVE_USER_UNITS",
+  USER_UNITS_FILLED: "USER_UNITS_FILLED",
 };
 
 // Here I define the reducer
@@ -29,10 +29,10 @@ export const reducer = (state, action) => {
           activity: action.payload.activity
         },
       };
-    case actions.SET_HAVE_USER_UNITS:
+    case actions.USER_UNITS_FILLED:
       return {
         ...state,
-        have_user_units: action.payload,
+        user_units_filled: action.payload,
       };
     default:
       return state;

@@ -5,7 +5,7 @@ import { actions } from "../Utils/Reducers";
 
 export default function UserMeasurements() {
   const [height, setHeight] = useState("");
-  const [heightUnit, setHeightUnit] = useState("m");
+  const [heightUnit, setHeightUnit] = useState("cm");
   const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kg");
   const [age, setAge] = useState("");
@@ -21,24 +21,21 @@ export default function UserMeasurements() {
       isNaN(state.user_units.weight) === false &&
       isNaN(state.user_units.age) === false
     ) {
-      dispatch({ type: actions.SET_HAVE_USER_UNITS, payload: true });
+      dispatch({ type: actions.USER_UNITS_FILLED, payload: true });
     }
-
-    console.log(state.have_user_units);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.user_units, state.have_user_units]);
+  }, [state.user_units, state.user_units_filled]);
 
-  const convertHeightToMeters = (value, unit) => {
+  const convertHeightToCentimeters = (value, unit) => {
     switch (unit) {
       case "cm":
         return parseFloat(value) / 100;
       // case "y":
       //   return parseFloat(value) * 0.9144;
       case "in":
-        return parseFloat(value) * 0.0254;
+        return parseFloat(value) * 2.54;
       case "ft":
-        return parseFloat(value) * 0.3048;
+        return parseFloat(value) * 30.48;
       default:
         return parseFloat(value);
     }
@@ -56,14 +53,14 @@ export default function UserMeasurements() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const heightInMeters = convertHeightToMeters(height, heightUnit);
+    const heightInCentimeters = convertHeightToCentimeters(height, heightUnit);
     const weightInKilograms = convertWeightToKilograms(weight, weightUnit);
     const ageToInt = parseInt(age);
 
     dispatch({
       type: actions.SET_USER_UNITS,
       payload: {
-        height: heightInMeters,
+        height: heightInCentimeters,
         weight: weightInKilograms,
         age: ageToInt,
         gender: userGender,
@@ -97,7 +94,7 @@ export default function UserMeasurements() {
             <option value="m">Meters</option>
             <option value="cm">Centimeter</option>
             <option value="in">Inches</option>
-            <option value="ft">Feet</option>
+            <option value="ft">Feets</option>
           </select>
         </div>
 
