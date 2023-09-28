@@ -25,6 +25,8 @@ export const reducer = (state, action) => {
           height: action.payload.height,
           weight: action.payload.weight,
           age: action.payload.age,
+          gender: action.payload.gender,
+          activity: action.payload.activity
         },
       };
     case actions.SET_HAVE_USER_UNITS:

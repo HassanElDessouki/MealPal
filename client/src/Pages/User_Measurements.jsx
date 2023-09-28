@@ -9,11 +9,13 @@ export default function UserMeasurements() {
   const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kg");
   const [age, setAge] = useState("");
+  const [userGender, setuserGender] = useState("male");
+  const [activityLevel, setActivityLevel] = useState('sedentary'); // Default to Sedentary
+
   const { state, dispatch } = useAppContext();
 
   useEffect(() => {
     console.log(state.user_units);
-
     if (
       isNaN(state.user_units.height) === false &&
       isNaN(state.user_units.weight) === false &&
@@ -31,8 +33,8 @@ export default function UserMeasurements() {
     switch (unit) {
       case "cm":
         return parseFloat(value) / 100;
-      case "y":
-        return parseFloat(value) * 0.9144;
+      // case "y":
+      //   return parseFloat(value) * 0.9144;
       case "in":
         return parseFloat(value) * 0.0254;
       case "ft":
@@ -43,12 +45,8 @@ export default function UserMeasurements() {
   };
   const convertWeightToKilograms = (value, unit) => {
     switch (unit) {
-      case "gm":
-        return parseFloat(value) / 1000;
       case "st":
         return parseFloat(value) * 6.35029;
-      case "oz":
-        return parseFloat(value) * 0.0283495;
       case "lb":
         return parseFloat(value) * 0.453592;
       default:
@@ -68,17 +66,21 @@ export default function UserMeasurements() {
         height: heightInMeters,
         weight: weightInKilograms,
         age: ageToInt,
+        gender: userGender,
+        activity: activityLevel
       },
     });
   };
 
   return (
     <InfoContainer>
-      <h1 className="text-4xl font-bold">Nice to meet you {state.name}!</h1>
+      <h1 className="text-4xl font-bold">Nice to meet you, {state.name}!</h1>
       <h2 className="text-2xl mt-4">
-        Now I need to recap some info to continue.
+        Now, I need to recap some information about you to continue.
       </h2>
       <form className="flex flex-col mt-5 gap-5" onSubmit={handleFormSubmit}>
+
+        {/* Height Input */}
         <div className="flex flex-row items-center gap-5">
           <p className="text-xl">Height:</p>
           <input
@@ -94,11 +96,12 @@ export default function UserMeasurements() {
           >
             <option value="m">Meters</option>
             <option value="cm">Centimeter</option>
-            <option value="y">Yards</option>
             <option value="in">Inches</option>
             <option value="ft">Feet</option>
           </select>
         </div>
+
+        {/* Weight Input */}
         <div className="flex flex-row items-center  gap-5">
           <p className="text-xl">Weight:</p>
           <input
@@ -115,12 +118,12 @@ export default function UserMeasurements() {
             className=" rounded-xl bg-textInputStroke text-black"
           >
             <option value="kg">Kilograms</option>
-            <option value="gm">Grams</option>
             <option value="st">Stones</option>
-            <option value="oz">Ounces</option>
             <option value="lb">Pounds</option>
           </select>
         </div>
+
+        {/* Age Input */}
         <div className="flex flex-row items-center gap-12">
           <p className="text-xl">Age:</p>
           <input
@@ -131,6 +134,36 @@ export default function UserMeasurements() {
               setAge(e.target.value.replace(/[^0-9.]/g, ""));
             }}
           />
+        </div>
+
+        {/* Gender Input */}
+        <div className="flex flex-row items-center gap-12">
+          <p className="text-xl">Gender:</p>
+          <select
+            id="gender"
+            value={userGender}
+            onChange={(e) => setuserGender(e.target.value)}
+            className=" rounded-xl bg-textInputStroke text-black"
+          >
+            <option selected value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        {/* Activity Input */}
+          <div className="flex flex-row items-center gap-12">
+          <p className="text-xl">Activity Level:</p>
+          <select 
+            value={activityLevel} 
+            onChange={(e) => setActivityLevel(e.target.value)}
+            className=" rounded-xl bg-textInputStroke text-black"
+          >
+            <option value='sedentary'>Sedentary (little or no exercise)</option>
+            <option value='lightly'>Lightly active (light exercise/sports 1-3 days/week)</option>
+            <option value='moderately'>Moderately active (moderate exercise/sports 3-5 days/week)</option>
+            <option value='very'>Very active (hard exercise/sports 6-7 days a week)</option>
+            <option value='extremely'>Extra active (very hard exercise/sports & a physical job)</option>
+          </select>
         </div>
 
         <button className="w-full mt-10 bg-button text-white py-2 rounded-xl">
