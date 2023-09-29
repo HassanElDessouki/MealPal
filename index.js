@@ -15,6 +15,20 @@ app.get("*", function (req, res) {
 });
 
 app.post('/submit', (req, res) => {
+
+  const { foodData, userHeight, userAge, userWeight, userGender, userActivity, userBMIStatus } = req.body;
+  
+  console.log("Food Data: ", foodData);
+  console.log("User Height: ", userHeight);
+  console.log("User Age: ", userAge);
+  console.log("User Weight: ", userWeight);
+  console.log("User Gender", userGender);
+  console.log("User Activity: ", userActivity);
+  console.log("User BMI Status: ", userBMIStatus);
+});
+
+/* 
+app.post('/submit', (req, res) => {
   const { foodData, userHeight, userAge, userWeight, userGender, userActivity, userBMIStatus } = req.body;
 
   let bmr;
@@ -120,7 +134,7 @@ app.post('/submit', (req, res) => {
   }
 
   res.json({ message: 'Data received successfully!' });
-});
+}); */
 
 app.listen(3001, () => {
   console.log("Listening on " + 3001);

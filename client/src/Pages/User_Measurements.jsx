@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import InfoContainer from "../Components/Info_Container";
 import { useAppContext } from "../Utils/Context";
 import { actions } from "../Utils/Reducers";
 
 export default function UserMeasurements() {
   const [height, setHeight] = useState("");
-  const [heightUnit, setHeightUnit] = useState("cm");
+  const [heightUnit, setHeightUnit] = useState("m");
   const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kg");
   const [age, setAge] = useState("");
-  const [userGender, setuserGender] = useState("male");
-  const [activityLevel, setActivityLevel] = useState('sedentary'); // Default to Sedentary
+  const [userGender, setuserGender] = useState("");
 
   const { state, dispatch } = useAppContext();
 
   useEffect(() => {
     console.log(state.user_units);
+    console.log(userGender)
     if (
       isNaN(state.user_units.height) === false &&
       isNaN(state.user_units.weight) === false &&
@@ -24,7 +23,7 @@ export default function UserMeasurements() {
       dispatch({ type: actions.USER_UNITS_FILLED, payload: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.user_units, state.user_units_filled]);
+  }, [state.user_units, state.user_units_filled, userGender]);
 
   const convertHeightToCentimeters = (value, unit) => {
     switch (unit) {
@@ -64,19 +63,18 @@ export default function UserMeasurements() {
         weight: weightInKilograms,
         age: ageToInt,
         gender: userGender,
-        activity: activityLevel
+        
       },
     });
   };
 
   return (
-    <InfoContainer>
+    <div className="flex flex-col justify-center bg-container px-8 w-[450px] h-[550px] rounded-[36px]">
       <h1 className="text-4xl font-bold">Nice to meet you, {state.name}!</h1>
       <h2 className="text-2xl mt-4">
         Now, I need to recap some information about you to continue.
       </h2>
       <form className="flex flex-col mt-5 gap-5" onSubmit={handleFormSubmit}>
-
         {/* Height Input */}
         <div className="flex flex-row items-center gap-5">
           <p className="text-xl">Height:</p>
@@ -134,39 +132,42 @@ export default function UserMeasurements() {
         </div>
 
         {/* Gender Input */}
-        <div className="flex flex-row items-center gap-12">
-          <p className="text-xl">Gender:</p>
-          <select
+        {/* <select
+          required
+           name="gender"
             id="gender"
             value={userGender}
+            placeholder="Gender"
             onChange={(e) => setuserGender(e.target.value)}
-            className=" rounded-xl bg-textInputStroke text-black"
-          >
-            <option selected value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
+                        // className="placeholder:text-xl w-36 border border-textInputStroke px-4 rounded-xl bg-transparent placeholder:text-gray-300"
 
-        {/* Activity Input */}
-          <div className="flex flex-row items-center gap-12">
-          <p className="text-xl">Activity Level:</p>
-          <select 
-            value={activityLevel} 
-            onChange={(e) => setActivityLevel(e.target.value)}
-            className=" rounded-xl bg-textInputStroke text-black"
-          >
-            <option value='sedentary'>Sedentary (little or no exercise)</option>
-            <option value='lightly'>Lightly active (light exercise/sports 1-3 days/week)</option>
-            <option value='moderately'>Moderately active (moderate exercise/sports 3-5 days/week)</option>
-            <option value='very'>Very active (hard exercise/sports 6-7 days a week)</option>
-            <option value='extremely'>Extra active (very hard exercise/sports & a physical job)</option>
+            className=" rounded-xl bg-textInputStroke text-black w-full text-center justify-center"
+        >
+            <option value="" disabled selected>Choose a drink</option>
+            <option value="m">Male</option>
+            <option value="f">Female</option>
           </select>
-        </div>
+          */}
+        
+        
+        <select
+          id="gender"
+          value={userGender}
+          onChange={(e) => setuserGender(e.target.value)}
+          className=" rounded-xl bg-textInputStroke text-black w-full text-center justify-center"
+        required>
+        <option value="" disabled selected>Select Gender</option>
+        <option value="m">Male</option>
+        <option value="f">Female</option>
+    </select>
+
+      
+        
 
         <button className="w-full mt-10 bg-button text-white py-2 rounded-xl">
           Continue
         </button>
       </form>
-    </InfoContainer>
+    </div>
   );
 }

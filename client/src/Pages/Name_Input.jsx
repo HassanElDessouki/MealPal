@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../Utils/Context";
 import { actions } from "../Utils/Reducers";
-import InfoContainer from "../Components/Info_Container";
 
 export default function NameInputScreen() {
   const [name, setName] = useState("");
@@ -20,7 +19,7 @@ export default function NameInputScreen() {
   };
 
   return (
-    <InfoContainer>
+    <div className="flex flex-col justify-center bg-container px-8 w-[450px] h-[450px] rounded-[36px]">
       <h1 className="text-5xl font-bold">Hello 👋</h1>
       <h2 className="text-2xl mt-10">What's your name?</h2>
       <form onSubmit={handleFormSubmit}>
@@ -36,7 +35,7 @@ export default function NameInputScreen() {
           Continue
         </button>
       </form>
-    </InfoContainer>
+    </div>
   );
 }
 
