@@ -101,22 +101,22 @@ app.post('/submit', (req, res) => {
     InTakeOfProtein = InTakeOfProtein + proteinGrams;
   }
 
-  if ((DailyProteinGrams - protein) > 0) {
+  if ((DailyProteinGrams - InTakeOfProtein) > 0) {
     console.log("User needs " + (DailyProteinGrams - InTakeOfProtein).toFixed(2) + " more protein.")
   } else {
     console.log("User needs " + (DailyProteinGrams - InTakeOfProtein).toFixed(2) + " less protein.")
   }
 
-  if ((DailyCarbGrams - protein) > 0) {
-    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates).toFixed(2) + " more protein.")
+  if ((DailyCarbGrams - InTakeOfCarbohydrates) > 0) {
+    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates).toFixed(2) + " more carbohydrates.")
   } else {
-    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates).toFixed(2) + " less protein.")
+    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates).toFixed(2) + " less carbohydrates.")
   }
 
-  if ((DailyFatGrams - protein) > 0) {
-    console.log("User needs " + (DailyFatGrams - InTakeOfFats).toFixed(2) + " more protein.")
+  if ((DailyFatGrams - InTakeOfFats) > 0) {
+    console.log("User needs " + (DailyFatGrams - InTakeOfFats).toFixed(2) + " more fats.")
   } else {
-    console.log("User needs " + (DailyFatGrams - InTakeOfFats).toFixed(2) + " less protein.")
+    console.log("User needs " + (DailyFatGrams - InTakeOfFats).toFixed(2) + " less fats.")
   }
 
   res.json({ message: 'Data received successfully!' });

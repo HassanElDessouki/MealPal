@@ -5,7 +5,7 @@ import { actions } from "../Utils/Reducers";
 
 export default function UserMeasurements() {
   const [height, setHeight] = useState("");
-  const [heightUnit, setHeightUnit] = useState("cm");
+  const [heightUnit, setHeightUnit] = useState("m");
   const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kg");
   const [age, setAge] = useState("");
