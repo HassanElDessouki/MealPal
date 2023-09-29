@@ -71,54 +71,11 @@ export default function UserMeasurements() {
 
   return (
     <InfoContainer>
-      <h1 className="text-4xl font-bold">Nice to meet you, {state.name}!</h1>
+      <h1 className="text-4xl font-bold">Nice to meet you, {state.name}! 🎉</h1>
       <h2 className="text-2xl mt-4">
         Now, I need to recap some information about you to continue.
       </h2>
       <form className="flex flex-col mt-5 gap-5" onSubmit={handleFormSubmit}>
-
-        {/* Height Input */}
-        <div className="flex flex-row items-center gap-5">
-          <p className="text-xl">Height:</p>
-          <input
-            className="placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300 w-36"
-            placeholder="0"
-            onChange={(e) => setHeight(e.target.value.replace(/[^0-9.]/g, ""))}
-          />
-          <select
-            id="height units"
-            value={heightUnit}
-            onChange={(e) => setHeightUnit(e.target.value)}
-            className=" rounded-xl bg-textInputStroke text-black"
-          >
-            <option value="m">Meters</option>
-            <option value="cm">Centimeter</option>
-            <option value="in">Inches</option>
-            <option value="ft">Feets</option>
-          </select>
-        </div>
-
-        {/* Weight Input */}
-        <div className="flex flex-row items-center  gap-5">
-          <p className="text-xl">Weight:</p>
-          <input
-            className="placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300 w-36"
-            placeholder="0"
-            onChange={(e) => {
-              setWeight(e.target.value.replace(/[^0-9.]/g, ""));
-            }}
-          />
-          <select
-            id="weight units"
-            value={weightUnit}
-            onChange={(e) => setWeightUnit(e.target.value)}
-            className=" rounded-xl bg-textInputStroke text-black"
-          >
-            <option value="kg">Kilograms</option>
-            <option value="st">Stones</option>
-            <option value="lb">Pounds</option>
-          </select>
-        </div>
 
         {/* Age Input */}
         <div className="flex flex-row items-center gap-12">
@@ -144,6 +101,49 @@ export default function UserMeasurements() {
           >
             <option selected value="male">Male</option>
             <option value="female">Female</option>
+          </select>
+        </div>
+
+        {/* Height Input */}
+        <div className="flex flex-row items-center gap-12">
+          <p className="text-xl">Height:</p>
+          <input
+            className="placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300 w-36"
+            placeholder="0"
+            onChange={(e) => setHeight(e.target.value.replace(/[^0-9.]/g, ""))}
+          />
+          <select
+            id="height units"
+            value={heightUnit}
+            onChange={(e) => setHeightUnit(e.target.value)}
+            className=" rounded-xl bg-textInputStroke text-black"
+          >
+            <option value="m">Meters</option>
+            <option value="cm">Centimeter</option>
+            <option value="in">Inches</option>
+            <option value="ft">Feets</option>
+          </select>
+        </div>
+
+        {/* Weight Input */}
+        <div className="flex flex-row items-center gap-12">
+          <p className="text-xl">Weight:</p>
+          <input
+            className="placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300 w-36"
+            placeholder="0"
+            onChange={(e) => {
+              setWeight(e.target.value.replace(/[^0-9.]/g, ""));
+            }}
+          />
+          <select
+            id="weight units"
+            value={weightUnit}
+            onChange={(e) => setWeightUnit(e.target.value)}
+            className=" rounded-xl bg-textInputStroke text-black"
+          >
+            <option value="kg">Kilograms</option>
+            <option value="st">Stones</option>
+            <option value="lb">Pounds</option>
           </select>
         </div>
 

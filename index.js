@@ -71,9 +71,9 @@ app.post('/submit', (req, res) => {
       console.error('Invalid BMI Category');
   }
 
-  const DailyProteinGrams = (tdee * proteinRatio) / 4;
-  const DailyCarbGrams = (tdee * carbRatio) / 4;
-  const DailyFatGrams = (tdee * fatRatio) / 9;
+  const DailyProteinGrams = ((tdee * proteinRatio) / 4).toFixed(2);
+  const DailyCarbGrams = ((tdee * carbRatio) / 4).toFixed(2);
+  const DailyFatGrams = ((tdee * fatRatio) / 9).toFixed(2);
 
   console.log(
     "User needs: " + DailyProteinGrams + " of Protein,", 
@@ -102,26 +102,27 @@ app.post('/submit', (req, res) => {
   }
 
   if ((DailyProteinGrams - InTakeOfProtein) > 0) {
-    console.log("User needs " + (DailyProteinGrams - InTakeOfProtein).toFixed(2) + " more protein.")
+    console.log("User needs " + (DailyProteinGrams - InTakeOfProtein) + " more protein.")
   } else {
-    console.log("User needs " + (DailyProteinGrams - InTakeOfProtein).toFixed(2) + " less protein.")
+    console.log("User needs " + (DailyProteinGrams - InTakeOfProtein)*-1 + " less protein.")
   }
 
   if ((DailyCarbGrams - InTakeOfCarbohydrates) > 0) {
-    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates).toFixed(2) + " more carbohydrates.")
+    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates) + " more carbohydrates.")
   } else {
-    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates).toFixed(2) + " less carbohydrates.")
+    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates)*-1 + " less carbohydrates.")
   }
 
   if ((DailyFatGrams - InTakeOfFats) > 0) {
-    console.log("User needs " + (DailyFatGrams - InTakeOfFats).toFixed(2) + " more fats.")
+    console.log("User needs " + (DailyFatGrams - InTakeOfFats) + " more fats.")
   } else {
-    console.log("User needs " + (DailyFatGrams - InTakeOfFats).toFixed(2) + " less fats.")
+    console.log("User needs " + (DailyFatGrams - InTakeOfFats)*-1 + " less fats.")
   }
 
-  res.json({ message: 'Data received successfully!' });
+  // res.json({ message: 'Data received successfully!' });
+  res.json({ TDEE: tdee, DailyProtein: DailyProteinGrams, DailyCarb: DailyCarbGrams, DailyFat: DailyFatGrams, InTakeOfCarbs: InTakeOfCarbohydrates, InTakeOfFats: InTakeOfFats, InTakeOfProtein: InTakeOfProtein });
 });
 
-app.listen(3001, () => {
-  console.log("Listening on " + 3001);
+app.listen(2555, () => {
+  console.log("Listening on " + 2555);
 });

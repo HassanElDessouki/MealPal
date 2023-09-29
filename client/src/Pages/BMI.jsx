@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import InfoContainer from "../Components/Info_Container";
 import { useAppContext } from "../Utils/Context";
+import { Pie } from "react-chartjs-2";
+
+const labels = ["Carbohydrates ", "Protein", "Fats"];
 
 export default function BMIScreen() {
   const [bmi, setBmi] = useState(0);
   const [bmiStatus, setBmiStatus] = useState("");
   const [foodName, setfoodName] = useState("");
-  
+  const [data, setData] = useState(null);
+  var   [foodDataAAA, setfoodDataAAA] = useState([]);
+
   const { state } = useAppContext();
   const getBMIStatus = (bmi) => {
     if (bmi < 18.5) {
@@ -20,17 +25,10 @@ export default function BMIScreen() {
     }
   };
 
-  var userFood;
-  var [foodDataAAA, setfoodDataAAA] = useState([]);
   const getFood = async (food) => {
     food.preventDefault()
-    userFood = foodName
 
-    await fetch("https://api.nal.usda.gov/fdc/v1/foods/search?query=" + userFood + "&pageSize=1&api_key=" + process.env.REACT_APP_API_KEY, {
-      // headers: new Headers({
-      //   'X-Api-Key': '', 
-      // }),
-    })
+    await fetch("https://api.nal.usda.gov/fdc/v1/foods/search?query=" + foodName + "&pageSize=1&api_key=" + process.env.REACT_APP_API_KEY)
     .then((response) => {
       if (!response.ok) { // Check if response status is not ok
         throw console.log(`HTTP error! status: ${response.status}`);
@@ -63,7 +61,7 @@ export default function BMIScreen() {
 
   const createMealPlan = async () => {
     try {
-      const response = await fetch('http://localhost:3001/submit', {
+      const response = await fetch('http://localhost:2555/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -85,17 +83,13 @@ export default function BMIScreen() {
       }
   
       const data = await response.json();
-      console.log('Data received from the server:', data);
+      setData(data)
     } catch (error) {
       console.error('Submit error:', error);
     }
   }
 
   useEffect(() => {
-    /*  const bmi_calculation =
-      <state className="user_units"></state>weight /
-      (state.user_units.height * state.user_units.height); */
-      
     const bmi_calculation =
       state.user_units.weight / (state.user_units.height) ** 2;
     setBmi(bmi_calculation.toFixed(2));
@@ -104,6 +98,7 @@ export default function BMIScreen() {
 
     setBmiStatus(getBMIStatus(bmi_calculation));
   }, [state.user_units]);
+
   return (
     <InfoContainer>
       <h1 className="text-4xl font-bold">Alright, {state.name}!</h1>
@@ -121,7 +116,7 @@ export default function BMIScreen() {
                 with that!
               </p>
               <button className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl">
-                See meal plan!
+                Create Meal Plan!
               </button>
             </div>
           ),
@@ -136,9 +131,6 @@ export default function BMIScreen() {
                 You should consider losing some weight, and we will help you
                 with that!
               </p>
-              {/* <button className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl">
-                See meal plan!
-              </button> */}
 
               <form onSubmit={getFood}>
                 <div className="flex flex-row items-center gap-12">
@@ -164,8 +156,22 @@ export default function BMIScreen() {
                 </div>
               ))}
               <button onClick={createMealPlan} className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl">
-                See meal plan!
+                Create Meal Plan!
               </button>
+
+              {data && (
+                <div>
+                  <p>You need {data.DailyCarb}g of Carbs</p>
+                  <p>You need {data.DailyFat}g of Fats</p>
+                  <p>You need {data.DailyProtein}g of Protein</p>
+
+                  <p>You currently have an intake of {data.InTakeOfCarbs}g of Carbs</p>
+                  <p>You currently have an intake of {data.InTakeOfFats}g of Fats</p>
+                  <p>You currently have an intake of {data.InTakeOfProtein}g of Protein</p>
+
+                </div>
+              )}
+
             </div>
           ),
           Obese: (
@@ -175,7 +181,7 @@ export default function BMIScreen() {
                 with that!
               </p>
               <button className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl">
-                See meal plan!
+                Create Meal Plan!
               </button>
             </div>
           ),
