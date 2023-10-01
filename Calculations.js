@@ -8,9 +8,9 @@ const CalculateBmrAndTdee = (
 ) => {
   let bmr;
   if (userGender === "male") {
-    bmr = 88.362 + (13.397 * userWeight) + (4.799 * userHeight) - (5.677 * userAge);
+    bmr = 88.362 + 13.397 * userWeight + 4.799 * userHeight - 5.677 * userAge;
   } else {
-    bmr = 447.593 + (9.247 * userWeight) + (3.098 * userHeight) - (4.33 * userAge);
+    bmr = 447.593 + 9.247 * userWeight + 3.098 * userHeight - 4.33 * userAge;
   }
 
   let tdee;
@@ -37,6 +37,7 @@ const CalculateBmrAndTdee = (
   return [bmr, tdee];
 };
 
+
 // In this function where calculating the ratio of protein, carbs, and fats the user should be consuming
 const Get_Protein_Carb_Fat_Ratio = (userBMIStatus) => {
   switch (userBMIStatus) { 
@@ -55,3 +56,8 @@ const Get_Protein_Carb_Fat_Ratio = (userBMIStatus) => {
   }
 
 };
+
+module.exports = {
+  CalculateBmrAndTdee,
+  Get_Protein_Carb_Fat_Ratio
+}

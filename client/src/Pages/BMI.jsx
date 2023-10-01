@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../Utils/Context";
-import { actions } from "../Utils/Reducers";
+// import { actions } from "../Utils/Reducers";
 
 export default function BMIScreen() {
   const [bmi, setBmi] = useState(0);
   const [bmiStatus, setBmiStatus] = useState("");
   const [data, setData] = useState(null);
-  const { state, dispatch } = useAppContext();
+  const { state } = useAppContext();
   const getBMIStatus = (bmi) => {
     if (bmi < 18.5) {
       return "Underweight";
@@ -28,20 +28,23 @@ export default function BMIScreen() {
 
   const generate_meal_plan = async () => {
     try {
-      const response = await fetch("https://localhost:3001/submit/", {
+      const response = await fetch("http://localhost:3001/submit/", {
         mode: 'cors',
         method: 'POST',
         headers: {
+          'Access-Control-Allow-Origin':'*',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          
           userAge: state.user_units.age,
           userHeight: state.user_units.height,
           userWeight: state.user_units.weight,
           userGender: state.user_units.gender,
-          userActivity: state.user_units.activity,
+          userActivity: state.user_units.activity_level,
           userBMIStatus: bmiStatus,
-        })        
+        }    
+        )
       });
 
       if (!response.ok) {
@@ -60,7 +63,7 @@ export default function BMIScreen() {
   const show_meal_plan_button = () => {
     return (
       <button
-        onClick={() => generate_meal_plan()}
+        onClick={()=>generate_meal_plan()}
         className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl">
         Create meal plan
       </button>
