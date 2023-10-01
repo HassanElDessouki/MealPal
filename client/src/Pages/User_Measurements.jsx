@@ -66,7 +66,7 @@ export default function UserMeasurements() {
   };
 
   return (
-    <div className="flex flex-col justify-center bg-container px-8 w-[450px] h-[550px] rounded-[36px]">
+    <div className="flex flex-col justify-center bg-container px-8 w-[450px] h-[600px] rounded-[36px]">
       <h1 className="text-4xl font-bold">Nice to meet you, {state.name}!</h1>
       <h2 className="text-2xl mt-4">
         Now, I need to recap some information about you to continue.
