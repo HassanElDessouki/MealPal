@@ -5,7 +5,7 @@ import { actions } from "../Utils/Reducers";
 export default function BMIScreen() {
   const [bmi, setBmi] = useState(0);
   const [bmiStatus, setBmiStatus] = useState("");
-  const [data, setData] = useState(null);
+  const [weekData, setWeekData] = useState();
   const { state, dispatch } = useAppContext();
   const getBMIStatus = (bmi) => {
     if (bmi < 18.5) {
@@ -48,8 +48,7 @@ export default function BMIScreen() {
       }
       const data = await response.json();
       console.log(data)
-      setData(data);
-
+      setWeekData(data);
     } catch (error) {
       console.error('Submit error:', error);
     }
@@ -116,16 +115,8 @@ export default function BMIScreen() {
           ),
         }[bmiStatus]
       }
-      {data && (
+      {weekData && (
         <div>
-          {/* <p>You need {data.DailyCarb}g of Carbs</p>
-          <p>You need {data.DailyFat}g of Fats</p>
-          <p>You need {data.DailyProtein}g of Protein</p>
-
-          <p>You currently have an intake of {data.InTakeOfCarbs}g of Carbs</p>
-          <p>You currently have an intake of {data.InTakeOfFats}g of Fats</p>
-          <p>You currently have an intake of {data.InTakeOfProtein}g of Protein</p> */}
-
         </div>
       )}
     </div>

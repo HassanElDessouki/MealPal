@@ -8,6 +8,7 @@ require('dotenv').config()
 const corsOptions = {
   origin: 'http://localhost:3000' // Only allow requests from this origin
 };
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
@@ -46,16 +47,13 @@ app.post('/submit', async (req, res) => {
     default:
       console.error('Invalid Activity Level');
   }
-
-  console.log(tdee, process.env.MEALAPI)
-  axios.get('https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=' + tdee + '&apiKey=' + process.env.MEALAPI)
+  await axios.get('https://api.spoonacular.com/mealplanner/generate?timeFrame=week&targetCalories=' + tdee + '&apiKey=' + process.env.MEALAPI)
   .then(response => {
-    console.log(response.data)
+    res.json(response.data);
   })
   .catch(error => {
     console.log("error: " + error.message)
   });
-  res.json({ message: 'Data received successfully!' });
 });
 
 app.listen(3001, () => {
