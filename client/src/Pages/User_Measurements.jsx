@@ -135,7 +135,7 @@ export default function UserMeasurements() {
           id="gender"
           value={userGender}
           onChange={(e) => setuserGender(e.target.value)}
-          className=" rounded-xl bg-textInputStroke text-black w-full text-center justify-center"
+          className="rounded-xl bg-textInputStroke text-black"
           required
         >
           <option value="" disabled selected>

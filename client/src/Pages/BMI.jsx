@@ -5,7 +5,7 @@ import { actions } from "../Utils/Reducers";
 export default function BMIScreen() {
   const [bmi, setBmi] = useState(0);
   const [bmiStatus, setBmiStatus] = useState("");
-  
+  const [data, setData] = useState(null);
   const { state, dispatch } = useAppContext();
   const getBMIStatus = (bmi) => {
     if (bmi < 18.5) {
@@ -20,28 +20,47 @@ export default function BMIScreen() {
   };
 
   useEffect(() => {
-    const bmi_calculation =
-      state.user_units.weight / (state.user_units.height) ** 2;
+    const bmi_calculation = state.user_units.weight / (state.user_units.height) ** 2;
     setBmi(bmi_calculation.toFixed(2));
-
-    console.log(state.start_meal_plan_creation);
-    console.log("Activity level: ", state.user_units.activity_level)
-
-    console.log("BMI.jsx, height: ", state.user_units.height);
-    console.log("BMI.jsx, weight: ", state.user_units.weight);
-
     setBmiStatus(getBMIStatus(bmi_calculation));
-  }, [state.user_units, state.start_meal_plan_creation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.user_units]);
+
+  const generate_meal_plan = async () => {
+    try {
+      const response = await fetch("https://localhost:3001/submit/", {
+        mode: 'cors',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userAge: state.user_units.age,
+          userHeight: state.user_units.height,
+          userWeight: state.user_units.weight,
+          userGender: state.user_units.gender,
+          userActivity: state.user_units.activity,
+          userBMIStatus: bmiStatus,
+        })        
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      setData(data);
+
+    } catch (error) {
+      console.error('Submit error:', error);
+    }
+  }
+  
+
 
   const show_meal_plan_button = () => {
     return (
       <button
-        onClick={() => {
-          dispatch({
-            type: actions.START_MEAL_PLAN_CREATION,
-            payload: true,
-          })
-        }}
+        onClick={() => generate_meal_plan()}
         className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl">
         Create meal plan
       </button>
@@ -99,6 +118,18 @@ export default function BMIScreen() {
           ),
         }[bmiStatus]
       }
+      {data && (
+        <div>
+          <p>You need {data.DailyCarb}g of Carbs</p>
+          <p>You need {data.DailyFat}g of Fats</p>
+          <p>You need {data.DailyProtein}g of Protein</p>
+
+          <p>You currently have an intake of {data.InTakeOfCarbs}g of Carbs</p>
+          <p>You currently have an intake of {data.InTakeOfFats}g of Fats</p>
+          <p>You currently have an intake of {data.InTakeOfProtein}g of Protein</p>
+
+        </div>
+      )}
     </div>
   );
 }

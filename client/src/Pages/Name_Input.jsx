@@ -8,8 +8,7 @@ export default function NameInputScreen() {
 
   useEffect(() => {
     dispatch({ type: actions.SET_GREETING, payload: state.name === "" });
-    console.log("name:", state.name);
-    console.log("show_greeting:", state.show_greeting);
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.name, state.show_greeting]);
 
