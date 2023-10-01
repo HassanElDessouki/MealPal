@@ -30,6 +30,7 @@ export default function NameInputScreen() {
           onChange={(e) => {
             setName(e.target.value.replace(/[^a-zA-Z\s]/g, ""));
           }}
+          required
         />
         <button className="w-full mt-10 bg-button text-white  py-2 rounded-xl">
           Continue

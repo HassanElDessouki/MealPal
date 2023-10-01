@@ -9,12 +9,11 @@ export default function UserMeasurements() {
   const [weightUnit, setWeightUnit] = useState("kg");
   const [age, setAge] = useState("");
   const [userGender, setuserGender] = useState("");
+  const [activityLevel, setActivityLevel] = useState("");
 
   const { state, dispatch } = useAppContext();
 
   useEffect(() => {
-    console.log(state.user_units);
-    console.log(userGender)
     if (
       isNaN(state.user_units.height) === false &&
       isNaN(state.user_units.weight) === false &&
@@ -25,12 +24,10 @@ export default function UserMeasurements() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.user_units, state.user_units_filled, userGender]);
 
-  const convertHeightToCentimeters = (value, unit) => {
+  const convertHeightToMeters = (value, unit) => {
     switch (unit) {
       case "cm":
         return parseFloat(value) / 100;
-      // case "y":
-      //   return parseFloat(value) * 0.9144;
       case "in":
         return parseFloat(value) * 2.54;
       case "ft":
@@ -52,18 +49,18 @@ export default function UserMeasurements() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const heightInCentimeters = convertHeightToCentimeters(height, heightUnit);
+    const heightInMeters = convertHeightToMeters(height, heightUnit);
     const weightInKilograms = convertWeightToKilograms(weight, weightUnit);
     const ageToInt = parseInt(age);
 
     dispatch({
       type: actions.SET_USER_UNITS,
       payload: {
-        height: heightInCentimeters,
+        height: heightInMeters,
         weight: weightInKilograms,
         age: ageToInt,
         gender: userGender,
-        
+        activity_level: activityLevel,
       },
     });
   };
@@ -82,6 +79,7 @@ export default function UserMeasurements() {
             className="placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300 w-36"
             placeholder="0"
             onChange={(e) => setHeight(e.target.value.replace(/[^0-9.]/g, ""))}
+            required
           />
           <select
             id="height units"
@@ -105,6 +103,7 @@ export default function UserMeasurements() {
             onChange={(e) => {
               setWeight(e.target.value.replace(/[^0-9.]/g, ""));
             }}
+            required
           />
           <select
             id="weight units"
@@ -128,43 +127,49 @@ export default function UserMeasurements() {
             onChange={(e) => {
               setAge(e.target.value.replace(/[^0-9.]/g, ""));
             }}
+            required
           />
         </div>
 
-        {/* Gender Input */}
-        {/* <select
-          required
-           name="gender"
-            id="gender"
-            value={userGender}
-            placeholder="Gender"
-            onChange={(e) => setuserGender(e.target.value)}
-                        // className="placeholder:text-xl w-36 border border-textInputStroke px-4 rounded-xl bg-transparent placeholder:text-gray-300"
-
-            className=" rounded-xl bg-textInputStroke text-black w-full text-center justify-center"
-        >
-            <option value="" disabled selected>Choose a drink</option>
-            <option value="m">Male</option>
-            <option value="f">Female</option>
-          </select>
-          */}
-        
-        
         <select
           id="gender"
           value={userGender}
           onChange={(e) => setuserGender(e.target.value)}
           className=" rounded-xl bg-textInputStroke text-black w-full text-center justify-center"
-        required>
-        <option value="" disabled selected>Select Gender</option>
-        <option value="m">Male</option>
-        <option value="f">Female</option>
-    </select>
+          required
+        >
+          <option value="" disabled selected>
+            Select Gender
+          </option>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+        </select>
 
-      
-        
+        <select
+          value={activityLevel}
+          onChange={(e) => setActivityLevel(e.target.value)}
+          className=" rounded-xl bg-textInputStroke text-black"
+          required
+        >
+          <option value="" disabled selected>
+            Select your activity level
+          </option>
+          <option value="sedentary">Sedentary (little or no exercise)</option>
+          <option value="lightly">
+            Lightly active (light exercise/sports 1-3 days/week)
+          </option>
+          <option value="moderately">
+            Moderately active (moderate exercise/sports 3-5 days/week)
+          </option>
+          <option value="very">
+            Very active (hard exercise/sports 6-7 days a week)
+          </option>
+          <option value="extremely">
+            Extra active (very hard exercise/sports & a physical job)
+          </option>
+        </select>
 
-        <button className="w-full mt-10 bg-button text-white py-2 rounded-xl">
+        <button className="w-full mt-6 bg-button text-white py-2 rounded-xl">
           Continue
         </button>
       </form>

@@ -2,7 +2,6 @@ import { useAppContext } from "../Utils/Context";
 import UserMeasurements from "./User_Measurements";
 import NameInputScreen from "./Name_Input";
 import BMIScreen from "./BMI";
-import GetUserPreferencesData from "./Get_User_Preferences";
 
 export default function CurrentScreen() {
   const { state } = useAppContext();
@@ -13,9 +12,9 @@ export default function CurrentScreen() {
         <NameInputScreen />
       ) : !state.user_units_filled ? (
         <UserMeasurements />
-      ) : !state.start_meal_plan_creation ? (
+      ) : (
         <BMIScreen />
-      ) : <GetUserPreferencesData/> }
+      )}
     </div>
   );
 }
