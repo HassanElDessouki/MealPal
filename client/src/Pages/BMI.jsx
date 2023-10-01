@@ -39,8 +39,7 @@ export default function BMIScreen() {
           userHeight: state.user_units.height,
           userWeight: state.user_units.weight,
           userGender: state.user_units.gender,
-          userActivity: state.user_units.activity,
-          userBMIStatus: bmiStatus,
+          userActivity: state.user_units.activity_level
         })        
       });
 

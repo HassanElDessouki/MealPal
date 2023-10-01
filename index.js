@@ -17,7 +17,7 @@ app.get("*", function (req, res) {
 });
 
 app.post('/submit', async (req, res) => {
-  const { userHeight, userAge, userWeight, userGender, userActivity, userBMIStatus } = req.body;
+  const { userHeight, userAge, userWeight, userGender, userActivity } = req.body;
 
   let bmr;
   if (userGender === 'male') {
