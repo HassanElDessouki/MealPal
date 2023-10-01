@@ -28,7 +28,7 @@ export default function BMIScreen() {
 
   const generate_meal_plan = async () => {
     try {
-      const response = await fetch("https://localhost:3001/submit/", {
+      const response = await fetch("http://localhost:3001/submit/", {
         mode: 'cors',
         method: 'POST',
         headers: {
@@ -48,6 +48,7 @@ export default function BMIScreen() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
+      console.log(data)
       setData(data);
 
     } catch (error) {
@@ -55,14 +56,12 @@ export default function BMIScreen() {
     }
   }
   
-
-
   const show_meal_plan_button = () => {
     return (
       <button
         onClick={() => generate_meal_plan()}
         className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl">
-        Create meal plan
+        Create Meal Plan
       </button>
     );
   }
@@ -120,13 +119,13 @@ export default function BMIScreen() {
       }
       {data && (
         <div>
-          <p>You need {data.DailyCarb}g of Carbs</p>
+          {/* <p>You need {data.DailyCarb}g of Carbs</p>
           <p>You need {data.DailyFat}g of Fats</p>
           <p>You need {data.DailyProtein}g of Protein</p>
 
           <p>You currently have an intake of {data.InTakeOfCarbs}g of Carbs</p>
           <p>You currently have an intake of {data.InTakeOfFats}g of Fats</p>
-          <p>You currently have an intake of {data.InTakeOfProtein}g of Protein</p>
+          <p>You currently have an intake of {data.InTakeOfProtein}g of Protein</p> */}
 
         </div>
       )}

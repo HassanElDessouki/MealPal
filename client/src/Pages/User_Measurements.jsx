@@ -138,7 +138,7 @@ export default function UserMeasurements() {
           className="rounded-xl bg-textInputStroke text-black"
           required
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             Select Gender
           </option>
           <option value="m">Male</option>
@@ -151,7 +151,7 @@ export default function UserMeasurements() {
           className=" rounded-xl bg-textInputStroke text-black"
           required
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             Select your activity level
           </option>
           <option value="sedentary">Sedentary (little or no exercise)</option>

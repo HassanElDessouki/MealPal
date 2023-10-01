@@ -1,9 +1,9 @@
 const express = require("express"); // Web Framework
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { CalculateBmrAndTdee } = require("./Calculations");
-const { Get_Protein_Carb_Fat_Ratio } = require("./Calculations");
 const app = express();
+const axios = require('axios');
+require('dotenv').config()
 
 const corsOptions = {
   origin: 'http://localhost:3000' // Only allow requests from this origin
@@ -16,55 +16,47 @@ app.get("*", function (req, res) {
   res.send("<h1>URL " + req + " is not found</h1>");
 });
 
-
-app.post('/submit', (req, res) => {
+app.post('/submit', async (req, res) => {
   const { userHeight, userAge, userWeight, userGender, userActivity, userBMIStatus } = req.body;
 
-  const bmr_tdee_calculation = CalculateBmrAndTdee(userGender, userWeight, userHeight, userAge, userActivity);  
-  let bmr = bmr_tdee_calculation[0];
-  let tdee = bmr_tdee_calculation[1];
-
-
-  const protein_carb_fat_ratio = Get_Protein_Carb_Fat_Ratio(userBMIStatus)[0];
-  let proteinRatio = protein_carb_fat_ratio[0];
-  let carbRatio = protein_carb_fat_ratio[1];
-  let fatRatio = protein_carb_fat_ratio[2];
-
-  const DailyProteinGrams = (tdee * proteinRatio) / 4;
-  const DailyCarbGrams = (tdee * carbRatio) / 4;
-  const DailyFatGrams = (tdee * fatRatio) / 9;
-
-  console.log(
-    "User needs: " + DailyProteinGrams + " of Protein,", 
-    DailyCarbGrams + " of Carbs, and", 
-    DailyFatGrams + " of Fats")
-
-  var food = "";
-  var InTakeOfCarbohydrates = 0;
-  var InTakeOfProtein = 0;
-  var InTakeOfFats = 0;
-
-  if ((DailyProteinGrams - protein) > 0) {
-    console.log("User needs " + (DailyProteinGrams - InTakeOfProtein).toFixed(2) + " more protein.")
+  let bmr;
+  if (userGender === 'male') {
+    bmr = 88.362 + (13.397 * userWeight) + (4.799 * userHeight) - (5.677 * userAge);
   } else {
-    console.log("User needs " + (DailyProteinGrams - InTakeOfProtein).toFixed(2) + " less protein.")
+    bmr = 447.593 + (9.247 * userWeight) + (3.098 * userHeight) - (4.330 * userAge);
+  }
+  
+  var tdee;
+  switch (userActivity) {
+    case 'sedentary':
+      tdee = bmr * 1.2;
+      break;
+    case 'lightly':
+      tdee = bmr * 1.375;
+      break;
+    case 'moderately':
+      tdee = bmr * 1.55;
+      break;
+    case 'very':
+      tdee = bmr * 1.725;
+      break;
+    case 'extremely':
+      tdee = bmr * 1.9;
+      break;
+    default:
+      console.error('Invalid Activity Level');
   }
 
-  if ((DailyCarbGrams - protein) > 0) {
-    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates).toFixed(2) + " more protein.")
-  } else {
-    console.log("User needs " + (DailyCarbGrams - InTakeOfCarbohydrates).toFixed(2) + " less protein.")
-  }
-
-  if ((DailyFatGrams - protein) > 0) {
-    console.log("User needs " + (DailyFatGrams - InTakeOfFats).toFixed(2) + " more protein.")
-  } else {
-    console.log("User needs " + (DailyFatGrams - InTakeOfFats).toFixed(2) + " less protein.")
-  }
-
+  console.log(tdee, process.env.MEALAPI)
+  axios.get('https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=' + tdee + '&apiKey=' + process.env.MEALAPI)
+  .then(response => {
+    console.log(response.data)
+  })
+  .catch(error => {
+    console.log("error: " + error.message)
+  });
   res.json({ message: 'Data received successfully!' });
 });
-
 
 app.listen(3001, () => {
   console.log("Listening on " + 3001);
