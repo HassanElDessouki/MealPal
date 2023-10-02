@@ -6,6 +6,7 @@ const initialState = {
   show_greeting: true,
   user_units: [],
   user_units_filled: false,
+  meal_plan_data: {},
 };
 
 const AppContext = createContext(initialState);

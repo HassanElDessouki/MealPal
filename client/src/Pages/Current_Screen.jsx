@@ -7,7 +7,7 @@ export default function CurrentScreen() {
   const { state } = useAppContext();
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen overflow-hidden">
+    <div class="flex flex-col mt-44 mx-5 sm:mt-[-2%] sm:mx-[-2%] sm:w-screen sm:h-screen items-center justify-center">
       {state.show_greeting ? (
         <NameInputScreen />
       ) : !state.user_units_filled ? (

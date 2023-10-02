@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../Utils/Context";
-// import { actions } from "../Utils/Reducers";
+import { actions } from "../Utils/Reducers";
+import { NavLink } from "react-router-dom";
 
 export default function BMIScreen() {
   const [bmi, setBmi] = useState(0);
   const [bmiStatus, setBmiStatus] = useState("");
-  const [data, setData] = useState(null);
-  const { state } = useAppContext();
+  
+  const { state, dispatch } = useAppContext();
   const getBMIStatus = (bmi) => {
     if (bmi < 18.5) {
       return "Underweight";
@@ -32,48 +33,48 @@ export default function BMIScreen() {
         mode: 'cors',
         method: 'POST',
         headers: {
-          'Access-Control-Allow-Origin':'*',
+          'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          
           userAge: state.user_units.age,
           userHeight: state.user_units.height,
           userWeight: state.user_units.weight,
           userGender: state.user_units.gender,
           userActivity: state.user_units.activity_level,
           userBMIStatus: bmiStatus,
-        }    
-        )
+        })
       });
-
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      setData(data);
+      dispatch({
+        type: actions.SET_MEAL_PLAN,
+        payload: data,
+      });
 
     } catch (error) {
       console.error('Submit error:', error);
     }
   }
-  
-
 
   const show_meal_plan_button = () => {
     return (
-      <button
-        onClick={()=>generate_meal_plan()}
-        className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl">
+      <div className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl text-center hover:bg-green-500">
+        <NavLink
+          to="/meal-plan"
+          onClick={() => generate_meal_plan()}
+        // className="w-full mt-4 bg-button text-white py-2 rounded-xl text-xl"
+        >
         Create meal plan
-      </button>
+      </NavLink>
+      </div>
     );
   }
 
-
   return (
-    <div className="flex flex-col justify-center bg-container px-8 w-[450px] h-[450px] rounded-[36px]">
-
+    <div className="flex flex-col justify-center sm:bg-container sm:px-8 sm:w-[450px] sm:h-[450px] sm:rounded-[36px]">
       <h1 className="text-4xl font-bold">Alright, {state.name}!</h1>
       <p className="text-2xl mt-10">Your current BMI is: {bmi} kg/m2</p>
       <p className="text-2xl mt-5">
@@ -88,6 +89,7 @@ export default function BMIScreen() {
                 You should consider gaining some weight, and we will help you
                 with that!
               </p>
+
              {show_meal_plan_button()}
             </div>
           ),
@@ -120,19 +122,7 @@ export default function BMIScreen() {
             </div>
           ),
         }[bmiStatus]
-      }
-      {data && (
-        <div>
-          <p>You need {data.DailyCarb}g of Carbs</p>
-          <p>You need {data.DailyFat}g of Fats</p>
-          <p>You need {data.DailyProtein}g of Protein</p>
-
-          <p>You currently have an intake of {data.InTakeOfCarbs}g of Carbs</p>
-          <p>You currently have an intake of {data.InTakeOfFats}g of Fats</p>
-          <p>You currently have an intake of {data.InTakeOfProtein}g of Protein</p>
-
-        </div>
-      )}
+      }  
     </div>
   );
 }

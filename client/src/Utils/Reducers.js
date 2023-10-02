@@ -3,6 +3,7 @@ export const actions = {
   SET_NAME: "SET_NAME",
   SET_USER_UNITS: "SET_USER_UNITS",
   USER_UNITS_FILLED: "USER_UNITS_FILLED",
+  SET_MEAL_PLAN: "SET_MEAL_PLAN",
 };
 
 // Here I define the reducer
@@ -34,6 +35,12 @@ export const reducer = (state, action) => {
         ...state,
         user_units_filled: action.payload,
       };
+    
+    case actions.SET_MEAL_PLAN:
+      return {
+        ...state,
+        meal_plan_data: action.payload
+      }
 
     default:
       return state;

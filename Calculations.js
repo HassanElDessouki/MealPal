@@ -1,5 +1,5 @@
 // In this function where calculating the Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE) of the user
-const CalculateBmrAndTdee = (
+const CalculateTdee = (
   userGender,
   userWeight,
   userHeight,
@@ -16,25 +16,19 @@ const CalculateBmrAndTdee = (
   let tdee;
   switch (userActivity) {
     case "sedentary":
-      tdee = bmr * 1.2;
-      break;
+      return bmr * 1.2;
     case "lightly":
-      tdee = bmr * 1.375;
-      break;
+      return bmr * 1.375;
     case "moderately":
-      tdee = bmr * 1.55;
-      break;
+      return bmr * 1.55;
     case "very":
-      tdee = bmr * 1.725;
-      break;
+      return bmr * 1.725;
     case "extremely":
-      tdee = bmr * 1.9;
-      break;
+      return bmr * 1.9;
     default:
       console.error("Invalid Activity Level");
+      break;
   }
-
-  return [bmr, tdee];
 };
 
 
@@ -58,6 +52,6 @@ const Get_Protein_Carb_Fat_Ratio = (userBMIStatus) => {
 };
 
 module.exports = {
-  CalculateBmrAndTdee,
+  CalculateTdee,
   Get_Protein_Carb_Fat_Ratio
 }

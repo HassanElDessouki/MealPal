@@ -18,7 +18,7 @@ export default function NameInputScreen() {
   };
 
   return (
-    <div className="flex flex-col justify-center bg-container px-8 w-[450px] h-[450px] rounded-[36px]">
+    <div className="flex justify-center flex-col sm:bg-container sm:px-8 sm:w-[450px] sm:h-[450px] sm:rounded-[36px]">
       <h1 className="text-5xl font-bold">Hello 👋</h1>
       <h2 className="text-2xl mt-10">What's your name?</h2>
       <form onSubmit={handleFormSubmit}>
@@ -31,7 +31,7 @@ export default function NameInputScreen() {
           }}
           required
         />
-        <button className="w-full mt-10 bg-button text-white  py-2 rounded-xl">
+        <button className="w-full mt-10 bg-button text-white py-2 rounded-xl hover:bg-green-500">
           Continue
         </button>
       </form>

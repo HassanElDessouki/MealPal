@@ -4,9 +4,15 @@
 :root {
   --foreground-rgb: 255, 255, 255;
   --background: 4, 31, 3;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-body {
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body{
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background));
 }

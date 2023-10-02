@@ -66,9 +66,9 @@ export default function UserMeasurements() {
   };
 
   return (
-    <div className="flex flex-col justify-center bg-container px-8 w-[450px] h-[600px] rounded-[36px]">
-      <h1 className="text-4xl font-bold">Nice to meet you, {state.name}!</h1>
-      <h2 className="text-2xl mt-4">
+    <div className="flex flex-col justify-center sm:bg-container sm:px-8 sm:w-[450px] sm:h-[600px] sm:rounded-[36px]">
+      <h1 className="text-2xl sm:text-4xl font-bold">Nice to meet you, {state.name}!</h1>
+      <h2 className="text-xs sm:text-2xl mt-4">
         Now, I need to recap some information about you to continue.
       </h2>
       <form className="flex flex-col mt-5 gap-5" onSubmit={handleFormSubmit}>
@@ -76,7 +76,7 @@ export default function UserMeasurements() {
         <div className="flex flex-row items-center gap-5">
           <p className="text-xl">Height:</p>
           <input
-            className="placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300 w-36"
+            className="w-24 sm:w-36 placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300"
             placeholder="0"
             onChange={(e) => setHeight(e.target.value.replace(/[^0-9.]/g, ""))}
             required
@@ -98,7 +98,7 @@ export default function UserMeasurements() {
         <div className="flex flex-row items-center  gap-5">
           <p className="text-xl">Weight:</p>
           <input
-            className="placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300 w-36"
+            className="w-24 sm:w-36 placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent  placeholder:text-gray-300"
             placeholder="0"
             onChange={(e) => {
               setWeight(e.target.value.replace(/[^0-9.]/g, ""));
@@ -121,7 +121,7 @@ export default function UserMeasurements() {
         <div className="flex flex-row items-center gap-12">
           <p className="text-xl">Age:</p>
           <input
-            className="placeholder:text-xl w-36 border border-textInputStroke px-4 rounded-xl bg-transparent placeholder:text-gray-300"
+            className="w-24 sm:w-36 placeholder:text-xl border border-textInputStroke px-4 rounded-xl bg-transparent placeholder:text-gray-300"
             type="number"
             placeholder="0"
             onChange={(e) => {
@@ -135,7 +135,7 @@ export default function UserMeasurements() {
           id="gender"
           value={userGender}
           onChange={(e) => setuserGender(e.target.value)}
-          className="rounded-xl bg-textInputStroke text-black"
+          className="rounded-xl bg-textInputStroke text-black w-full"
           required
         >
           <option value="" disabled selected>
@@ -148,7 +148,7 @@ export default function UserMeasurements() {
         <select
           value={activityLevel}
           onChange={(e) => setActivityLevel(e.target.value)}
-          className=" rounded-xl bg-textInputStroke text-black"
+          className=" rounded-xl bg-textInputStroke text-black w-full"
           required
         >
           <option value="" disabled selected>
@@ -169,7 +169,7 @@ export default function UserMeasurements() {
           </option>
         </select>
 
-        <button className="w-full mt-6 bg-button text-white py-2 rounded-xl">
+        <button className="w-full mt-6 bg-button text-white py-2 rounded-xl hover:bg-green-500">
           Continue
         </button>
       </form>
