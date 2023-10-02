@@ -27,14 +27,14 @@ export default function MealPlanScreen() {
                     </h1>
                     <div className="flex flex-col sm:flex-row gap-5 mt-10">
                         {
-                            Object.keys(weekdays).map((day) =>
+                            state.meal_plan_data.week ? Object.keys(weekdays).map((day) =>
                                 <NavLink
                                     to={`/meal-plan/${weekdays[day]}`}
                                     className="bg-green-800 text-xl py-4 px-10 rounded-2xl hover:bg-green-600"
                                 >
                                     {day}
                                 </NavLink>
-                            )
+                            ) : <p className="text-xl">Loading...</p>
                         }
                     </div>
                 </div>

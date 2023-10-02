@@ -2,6 +2,8 @@ const express = require("express"); // Web Framework
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config();
 const { CalculateTdee, Get_Protein_Carb_Fat_Ratio } = require('./Calculations'); // Import the function from Calculations.js
 const app = express();
 
@@ -39,7 +41,7 @@ app.post('/submit', async (req, res) => {
 
   console.log("TDEE: " + tdee.toFixed(2));
 
-  await axios.get("https://api.spoonacular.com/mealplanner/generate?timeFrame=week&targetCalories=" + tdee.toFixed(2) + '&apiKey=' + "009156dc14e74792888f7dc38abad812")
+  await axios.get("https://api.spoonacular.com/mealplanner/generate?timeFrame=week&targetCalories=" + tdee.toFixed(2) + '&apiKey=' + process.env.API_KEY)
   .then(response => {
     res.json(response.data);
   })
